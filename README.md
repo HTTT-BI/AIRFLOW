@@ -1,1 +1,1 @@
-# apache-airflow-seminar
+# airflow-seminar
