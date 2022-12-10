@@ -3,12 +3,12 @@ import pandas as pd
 from sqlalchemy import create_engine
   
 # establish connections
-conn_string = 'postgresql://airflow:airflow@127.0.0.1/katinat_05'
+conn_string = 'postgresql://airflow:airflow@127.0.0.1/katinat_04'
   
 db = create_engine(conn_string)
 conn = db.connect()
 conn1 = psycopg2.connect(
-  database="katinat_05",
+  database="katinat_04",
   user='airflow', 
   password='airflow', 
   host='127.0.0.1', 
@@ -18,14 +18,14 @@ conn1 = psycopg2.connect(
 conn1.autocommit = True
 cursor = conn1.cursor()
 
-csv_path = './source_system/' + "20221205_katinat_05.csv"
+csv_path = './source_system/' + "20221205_katinat_04.csv"
 df = pd.read_csv(csv_path)
 
 # converting data to sql
-df.to_sql('katinat_05', conn, if_exists= 'replace')
+df.to_sql('katinat_customer_rainbow_drink', conn, if_exists= 'replace')
 
 # fetching all rows
-sql1='''select * from katinat_05'''
+sql1='''select * from katinat_customer_rainbow_drink'''
 cursor.execute(sql1)
 for i in cursor.fetchall():
     print(i)

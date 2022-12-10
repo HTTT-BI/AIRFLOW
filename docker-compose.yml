@@ -69,7 +69,7 @@ services:
     ports:
       - 5432:5432
     healthcheck:
-      test: ["CMD", "CMD-SHELL", "pg_isready", "-U", "airflow", "user"]
+      test: ["CMD-SHELL", "pg_isready", "-U", "user"]
       interval: 5s
       retries: 5
     restart: always
@@ -100,5 +100,6 @@ services:
       _AIRFLOW_WWW_USER_CREATE: 'true'
       _AIRFLOW_WWW_USER_USERNAME: ${_AIRFLOW_WWW_USER_USERNAME:-airflow}
       _AIRFLOW_WWW_USER_PASSWORD: ${_AIRFLOW_WWW_USER_PASSWORD:-airflow}
+
 volumes:
   postgres-db-volume:

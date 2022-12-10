@@ -46,23 +46,23 @@ with DAG(
         do_xcom_push=True
     )
     
-    # task_source_2 = PythonOperator(
-    #     task_id="get_data_source_2",
-    #     python_callable=get_data_from_source_2,
-    #     do_xcom_push=True
-    # )
+    task_source_2 = PythonOperator(
+        task_id="get_data_source_2",
+        python_callable=get_data_from_source_2,
+        do_xcom_push=True
+    )
     
-    # task_source_3 = PythonOperator(
-    #     task_id="get_data_source_3",
-    #     python_callable=get_data_from_source_3,
-    #     do_xcom_push=True
-    # )
+    task_source_3 = PythonOperator(
+        task_id="get_data_source_3",
+        python_callable=get_data_from_source_3,
+        do_xcom_push=True
+    )
     
-    # task_source_4 = PythonOperator(
-    #     task_id="get_data_source_4",
-    #     python_callable=get_data_from_source_4,
-    #     do_xcom_push=True
-    # )
+    task_source_4 = PythonOperator(
+        task_id="get_data_source_4",
+        python_callable=get_data_from_source_4,
+        do_xcom_push=True
+    )
     
     # Processing data from sources
     task_process_data_source_1 = PythonOperator(
@@ -70,25 +70,25 @@ with DAG(
 	    python_callable=process_data_from_source_1
     )
     
-    # task_process_data_source_2 = PythonOperator(
-	#     task_id='process_data_source_2',
-	#     python_callable=process_data_from_source_2
-    # )
+    task_process_data_source_2 = PythonOperator(
+	    task_id='process_data_source_2',
+	    python_callable=process_data_from_source_2
+    )
     
-    # task_process_data_source_3 = PythonOperator(
-	#     task_id='process_data_source_3',
-	#     python_callable=process_data_from_source_3
-    # )
+    task_process_data_source_3 = PythonOperator(
+	    task_id='process_data_source_3',
+	    python_callable=process_data_from_source_3
+    )
     
-    # task_process_data_source_4 = PythonOperator(
-	#     task_id='process_data_source_4',
-	#     python_callable=process_data_from_source_4
-    # )
+    task_process_data_source_4 = PythonOperator(
+	    task_id='process_data_source_4',
+	    python_callable=process_data_from_source_4
+    )
     
     # Truncate Stage    
     task_truncate_stage = PostgresOperator(
         task_id='truncate_stage_table',
-        postgres_conn_id='postgres_stage_localhost',
+        postgres_conn_id='postgres_stage',
         sql="""
             truncate table katinat_customer_rainbow_drink
         """
@@ -98,58 +98,57 @@ with DAG(
     task_save_to_stage_1 = BashOperator(
         task_id='save_stage_1',
         bash_command=(
-            #'psql -d stage -U airflow'
-            'psql postgresql://airflow:airflow@db:5432/stage'
-            # 'COPY katinat_customer_rainbow_drink(Name, Gender, TimeArrived, TimeAway) '
-            # "FROM '/tmp/20221205_katinat_01.csv' "
-            # "DELIMITER ',' "
-            # 'CSV HEADER"'
+            'psql postgresql://airflow:airflow@postgres:5432/stage "'
+            'COPY katinat_customer_rainbow_drink(Name, Gender, TimeArrived, TimeAway) '
+            "FROM '/tmp/stage_katinat_01.csv' "
+            "DELIMITER ',' "
+            'CSV HEADER"'
         )
     )
     
-    # task_save_to_stage_2 = BashOperator(
-    #     task_id='save_stage_2',
-    #     bash_command=(
-    #         'psql -d stage -U airflow -c "'
-    #         'COPY katinat_customer_rainbow_drink(Name,Gender,TimeArrived,TimeAway)'
-    #         "FROM '/tmp/20221205_katinat_02.csv' "
-    #         "DELIMITER ',' "
-    #         'CSV HEADER"'
-    #     )
-    # )
+    task_save_to_stage_2 = BashOperator(
+        task_id='save_stage_2',
+        bash_command=(
+            'psql postgresql://airflow:airflow@postgres:5432/stage "'
+            'COPY katinat_customer_rainbow_drink(Name, Gender, TimeArrived, TimeAway) '
+            "FROM '/tmp/stage_katinat_02.csv' "
+            "DELIMITER ',' "
+            'CSV HEADER"'
+        )
+    )
     
-    # task_save_to_stage_3 = BashOperator(
-    #     task_id='save_stage_3',
-    #     bash_command=(
-    #         'psql -d stage -U airflow -c "'
-    #         'COPY katinat_customer_rainbow_drink(Name,Gender,TimeArrived,TimeAway)'
-    #         "FROM '/tmp/20221205_katinat_03.csv' "
-    #         "DELIMITER ',' "
-    #         'CSV HEADER"'
-    #     )
-    # )
+    task_save_to_stage_3 = BashOperator(
+        task_id='save_stage_3',
+        bash_command=(
+            'psql postgresql://airflow:airflow@postgres:5432/stage "'
+            'COPY katinat_customer_rainbow_drink(Name, Gender, TimeArrived, TimeAway) '
+            "FROM '/tmp/stage_katinat_03.csv' "
+            "DELIMITER ',' "
+            'CSV HEADER"'
+        )
+    )
     
-    # task_save_to_stage_4 = BashOperator(
-    #     task_id='save_stage_4',
-    #     bash_command=(
-    #         'psql -d stage -U airflow -c "'
-    #         'COPY katinat_customer_rainbow_drink(Name,Gender,TimeArrived,TimeAway)'
-    #         "FROM '/tmp/20221205_katinat_04.csv' "
-    #         "DELIMITER ',' "
-    #         'CSV HEADER"'
-    #     )
-    # )
+    task_save_to_stage_4 = BashOperator(
+        task_id='save_stage_4',
+        bash_command=(
+            'psql postgresql://airflow:airflow@postgres:5432/stage "'
+            'COPY katinat_customer_rainbow_drink(Name, Gender, TimeArrived, TimeAway) '
+            "FROM '/tmp/stage_katinat_04.csv' "
+            "DELIMITER ',' "
+            'CSV HEADER"'
+        )
+    )
     
 # ------------------------------------------------------------------------
-# task_start >> [task_source_1, task_source_2, task_source_3, task_source_4] 
+task_start >> [task_source_1, task_source_2, task_source_3, task_source_4] 
 
-# task_source_1 >> task_process_data_source_1
-# task_source_2 >> task_process_data_source_2
-# task_source_3 >> task_process_data_source_3
-# task_source_4 >> task_process_data_source_4
+task_source_1 >> task_process_data_source_1
+task_source_2 >> task_process_data_source_2
+task_source_3 >> task_process_data_source_3
+task_source_4 >> task_process_data_source_4
 
-# [task_process_data_source_1, task_process_data_source_2, task_process_data_source_3, task_process_data_source_4] >> task_truncate_stage 
+[task_process_data_source_1, task_process_data_source_2, task_process_data_source_3, task_process_data_source_4] >> task_truncate_stage 
 
-# task_truncate_stage >> task_save_to_stage_1 >> task_end
+task_truncate_stage >> task_save_to_stage_1 >> task_save_to_stage_2 >> task_save_to_stage_3 >> task_save_to_stage_4 >> task_end
 
-task_start >> task_source_1 >> task_process_data_source_1 >> task_truncate_stage >> task_save_to_stage_1 >> task_end
+# task_start >> task_source_1 >> task_process_data_source_1 >> task_truncate_stage >> task_save_to_stage_1 >> task_end
