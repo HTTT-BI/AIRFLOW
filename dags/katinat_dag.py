@@ -21,8 +21,7 @@ default_args = {
 with DAG(
     dag_id='katinat_airflow_dag',
     default_args=default_args,
-    # schedule_interval='0 22 * * *',
-    schedule_interval=None
+    schedule_interval='0 22 * * *',
 ) as dag:
     # Task start & end
     task_start = DummyOperator(
